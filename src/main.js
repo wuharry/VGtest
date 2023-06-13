@@ -1,6 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import { createGtag } from 'vue-gtag';
+import gapi from 'gapi';
+import 'core-js/modules/es.promise';
+import 'core-js/modules/es.array.iterator';
 
 const app = createApp(App);
 

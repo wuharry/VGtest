@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "gapi": "0.0.3",
+    "google-auth-library": "^8.8.0",
     "vue": "^3.2.13",
     "vue-analytics": "^5.22.1",
     "vue-gtag": "^2.0.1",
