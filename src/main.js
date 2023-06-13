@@ -1,6 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import { createGtag } from 'vue-gtag';
+// import gapi from 'gapi';
+import 'core-js/modules/es.promise';
+import 'core-js/modules/es.array.iterator';
 
 const app = createApp(App);
 
@@ -13,5 +16,4 @@ const options = {
 
 // 使用 createGtag 函数将 vue-gtag 插件添加到应用程序
 app.use(createGtag, options);
-
 app.mount('#app');
