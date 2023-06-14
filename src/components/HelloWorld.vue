@@ -5,10 +5,11 @@
       check out the
     </p>
     <h3>Installed CLI Plugins</h3>
-    <h3>街到的資料:{{ showData }}</h3>
+    <h3>接到的資料:{{ showData }}</h3>
   </div>
 </template>
-<script > 
+<script>
+import axios from "axios";
 export default {
   name: "HelloWorld",
   data() {
@@ -17,61 +18,49 @@ export default {
     };
   },
   mounted() {
-    this.loadGoogleAPI();
+    this.getAnalyticsData();
   },
   methods: {
-    async loadGoogleAPI() {
-      await new Promise((resolve) => {
-        const script = document.createElement('script');
-        script.src = 'https://apis.google.com/js/api.js';
-        script.onload = resolve;
-        document.head.appendChild(script);
-      });
-
-      await gapi.load('client:auth2', () => {
-        return gapi.client.init({
-          apiKey: 'YOUR_API_KEY',
-          clientId: 'YOUR_CLIENT_ID',
-          discoveryDocs: ['https://analyticsreporting.googleapis.com/$discovery/rest?version=v4'],
-          scope: 'https://www.googleapis.com/auth/analytics.readonly',
-        });
-      });
-    },
     async getAnalyticsData() {
-      try {
-        const response = await gapi.client.analyticsreporting.reports.batchGet({
-          requestBody: {
+      const VIEW_ID = "380344010"; // 替换为您的 Google Analytics 视图 ID
+      const API_KEY = "AIzaSyCaADd3bfYV7erEvFJzjmBtcUnV6V5aTTc"; // 替换为您的 Google Cloud API 密钥
+
+      const response = await axios
+        .post(
+          `https://analyticsdata.googleapis.com/v1beta/123456789:runReport`,
+          {
             reportRequests: [
               {
-                viewId: 'YOUR_VIEW_ID',
-                dateRanges: [
-                  {
-                    startDate: '2023-06-01',
-                    endDate: '2023-06-11',
-                  },
-                ],
+                viewId: VIEW_ID,
                 metrics: [
-                  {
-                    expression: 'ga:pageviews',
-                  },
-                  {
-                    expression: 'ga:sessions',
-                  },
+                  { expression: "ga:users" },
+                  { expression: "ga:sessions" },
                 ],
-                dimensions: [
-                  {
-                    name: 'ga:pagePath',
-                  },
-                ],
+                dateRanges: [{ startDate: "10daysAgo", endDate: "today" }],
               },
             ],
           },
+          {
+            headers: {
+              Authorization: `Bearer ${API_KEY}`,
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
+        .then((response) => {
+          // 处理响应数据
+          console.log(response);
+          this.reports=response;
+        })
+        .catch((error) => {
+          // 处理错误
+          console.error(error);
         });
-
-        this.reports = response.result.reports;
-      } catch (error) {
-        console.error('Error retrieving Analytics data:', error);
-      }
+      console.log(response);
+      // const data = response.data;
+      // 在这里处理返回的数据
+      // console.log(data);
     },
   },
 };
