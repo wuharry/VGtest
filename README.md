@@ -21,4 +21,5 @@ npm run lint
 ```
 
 ### Customize configuration
-77777
+See [Configuration Reference](https://cli.vuejs.org/config/).
+sl;kna;kdv
