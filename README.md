@@ -22,5 +22,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-reset測試
+sl;kna;kdv
+'w;dljq';cljwq
